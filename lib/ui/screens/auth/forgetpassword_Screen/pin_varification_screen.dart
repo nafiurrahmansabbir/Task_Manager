@@ -1,20 +1,20 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:task_manager/ui/screens/auth/forgetpassword_Screen/email_varification_screen.dart';
-import 'package:task_manager/ui/screens/auth/sign_up_screen.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:task_manager/ui/screens/auth/forgetpassword_Screen/set_password.dart';
+import 'package:task_manager/ui/screens/auth/sign_in_screen.dart';
 import 'package:task_manager/ui/utilitys/app_colors.dart';
 import 'package:task_manager/ui/widgets/background_widget.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+class PinVarificationScreen extends StatefulWidget {
+  const PinVarificationScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<PinVarificationScreen> createState() => _PinVarificationScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
-  final TextEditingController _emailTeController = TextEditingController();
-  final TextEditingController _passwordTeController = TextEditingController();
+class _PinVarificationScreenState extends State<PinVarificationScreen> {
+  final TextEditingController _pinTeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,29 +27,35 @@ class _SignInScreenState extends State<SignInScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 100),
+                  const SizedBox(height: 130),
                   Text(
-                    'Get Started With',
+                    'Pin Varification',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    controller: _emailTeController,
-                    decoration: InputDecoration(
-                      hintText: 'E-mail',
-                    ),
+                  Text(
+                    'A 6 digits verification code will send to your e-mail adress',
+                    style: Theme.of(context).textTheme.titleSmall,
                   ),
-                  const SizedBox(height: 10),
-                  TextFormField(
-                    controller: _passwordTeController,
-                    decoration: InputDecoration(
-                      hintText: 'Password',
+                  const SizedBox(height: 20),
+                  PinCodeTextField(
+                    length: 6,
+                    animationType: AnimationType.fade,
+                    pinTheme: PinTheme(
+                      shape: PinCodeFieldShape.box,
+                      borderRadius: BorderRadius.circular(5),
+                      fieldHeight: 50,
+                      fieldWidth: 40,
+                      activeFillColor: Colors.white,
                     ),
+                    animationDuration: Duration(milliseconds: 300),
+                    backgroundColor: Colors.transparent,
+                    controller: _pinTeController,
+
+                     appContext: context,
                   ),
                   const SizedBox(height: 10),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {_onTapSetPassword();},
                     child: Icon(Icons.login),
                   ),
                   const SizedBox(
@@ -69,12 +75,6 @@ class _SignInScreenState extends State<SignInScreen> {
     return Center(
       child: Column(
         children: [
-          TextButton(
-            onPressed: () {
-              _onTapforgetpage();
-            },
-            child: Text('Forgot password?'),
-          ),
           RichText(
             text: TextSpan(
               style: TextStyle(
@@ -82,16 +82,16 @@ class _SignInScreenState extends State<SignInScreen> {
                 fontWeight: FontWeight.w500,
                 letterSpacing: 0.4,
               ),
-              text: "Don't have any account?  ",
+              text: "Have account?  ",
               children: [
                 TextSpan(
                     style: TextStyle(
                       color: AppColors.themeColor,
                     ),
-                    text: "Sign Up",
+                    text: "Sign In",
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        _onTapSingUpButton();
+                        _onTapBackToSignupPage();
                       }),
               ],
             ),
@@ -101,28 +101,27 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  void _onTapforgetpage() {
-    Navigator.push(
+  void _onTapBackToSignupPage() {
+    Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
-        builder: (context) => EmailVarificationScreen(),
-      ),
+        builder: (context) => const SignInScreen(),
+      ), (Route<dynamic> route) => false,
     );
   }
 
-  void _onTapSingUpButton() {
-    Navigator.push(
+  void _onTapSetPassword(){
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => SignUpScreen(),
+        builder: (context) => SetPassword(),
       ),
     );
   }
 
   @override
   void dispose() {
-    _emailTeController.dispose();
-    _passwordTeController.dispose();
+    _pinTeController.dispose();
     super.dispose();
   }
 }

@@ -1,10 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:task_manager/ui/screens/auth/sign_in_screen.dart';
 import 'package:task_manager/ui/utilitys/app_colors.dart';
 import 'package:task_manager/ui/widgets/background_widget.dart';
 
-import '../../utilitys/login_elevatedButton.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -74,11 +72,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  LoginElevatedButton(),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Icon(Icons.login),
+                  ),
                   const SizedBox(
                     height: 26,
                   ),
-              BuildHaveAccountSection(),
+                  BuildHaveAccountSection(),
                 ],
               ),
             ),
@@ -90,29 +91,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Widget BuildHaveAccountSection() {
     return Center(
-              child: Column(
-                children: [
-                  RichText(
-                    text: TextSpan(
-                      style: TextStyle(
-                        color: Colors.black.withOpacity(0.9),
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: 0.4,
-                      ),
-                      text: "Have account?  ",
-                      children: [
-                        TextSpan(
-                            style: TextStyle(
-                              color: AppColors.themeColor,
-                            ),
-                            text: "Sign In",
-                            recognizer: TapGestureRecognizer()..onTap = () {_onTapBackToSignupPage();}),
-                      ],
-                    ),
-                  ),
-                ],
+      child: Column(
+        children: [
+          RichText(
+            text: TextSpan(
+              style: TextStyle(
+                color: Colors.black.withOpacity(0.9),
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.4,
               ),
-            );
+              text: "Have account?  ",
+              children: [
+                TextSpan(
+                    style: TextStyle(
+                      color: AppColors.themeColor,
+                    ),
+                    text: "Sign In",
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        _onTapBackToSignupPage();
+                      }),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   void _onTapBackToSignupPage() {
@@ -129,4 +133,3 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 }
-

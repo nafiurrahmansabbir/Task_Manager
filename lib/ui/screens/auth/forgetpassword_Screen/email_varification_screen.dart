@@ -1,9 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:task_manager/ui/screens/auth/forgetpassword_Screen/pin_varification_screen.dart';
+import 'package:task_manager/ui/screens/auth/sign_in_screen.dart';
 import 'package:task_manager/ui/utilitys/app_colors.dart';
 import 'package:task_manager/ui/widgets/background_widget.dart';
 
-import '../../../utilitys/login_elevatedButton.dart';
 
 class EmailVarificationScreen extends StatefulWidget {
   const EmailVarificationScreen({super.key});
@@ -45,7 +46,10 @@ class _EmailVarificationScreenState extends State<EmailVarificationScreen> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  LoginElevatedButton(),
+              ElevatedButton(
+                onPressed: () {_onTapPinCode();},
+                child: Icon(Icons.login),
+              ),
                   const SizedBox(
                     height: 26,
                   ),
@@ -90,7 +94,21 @@ class _EmailVarificationScreenState extends State<EmailVarificationScreen> {
   }
 
   void _onTapBackToSignupPage() {
-    Navigator.pop(context);
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SignInScreen(),
+      ), (Route<dynamic> route) => false,
+    );
+  }
+
+  void _onTapPinCode() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PinVarificationScreen(),
+      ),
+    );
   }
 
   @override

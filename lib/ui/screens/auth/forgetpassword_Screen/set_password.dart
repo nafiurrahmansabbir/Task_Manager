@@ -1,19 +1,20 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:task_manager/ui/screens/auth/forgetpassword_Screen/email_varification_screen.dart';
+import 'package:task_manager/ui/screens/auth/sign_in_screen.dart';
 import 'package:task_manager/ui/screens/auth/sign_up_screen.dart';
 import 'package:task_manager/ui/utilitys/app_colors.dart';
 import 'package:task_manager/ui/widgets/background_widget.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+class SetPassword extends StatefulWidget {
+  const SetPassword({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<SetPassword> createState() => _SetPasswordState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
-  final TextEditingController _emailTeController = TextEditingController();
+class _SetPasswordState extends State<SetPassword> {
+  final TextEditingController _confirmpasswordTeController = TextEditingController();
   final TextEditingController _passwordTeController = TextEditingController();
 
   @override
@@ -29,31 +30,35 @@ class _SignInScreenState extends State<SignInScreen> {
                 children: [
                   const SizedBox(height: 100),
                   Text(
-                    'Get Started With',
+                    'Set Password',
                     style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  Text(
+                    'Maximum length of password 8 character with latter and number',
+                    style: Theme.of(context).textTheme.titleSmall,
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
-                    controller: _emailTeController,
-                    decoration: InputDecoration(
-                      hintText: 'E-mail',
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  TextFormField(
                     controller: _passwordTeController,
                     decoration: InputDecoration(
                       hintText: 'Password',
                     ),
                   ),
                   const SizedBox(height: 10),
+                  TextFormField(
+                    controller: _confirmpasswordTeController,
+                    decoration: InputDecoration(
+                      hintText: 'Confirm Password',
+                    ),
+                  ),
+                  const SizedBox(height: 18),
                   ElevatedButton(
-                    onPressed: () {},
-                    child: Icon(Icons.login),
+                    onPressed: () {_onTapSingInButton();},
+                    child: Text('Confirm'),
                   ),
                   const SizedBox(
-                    height: 26,
+                    height: 36,
                   ),
                   BuildHaveAccountSection(),
                 ],
@@ -69,12 +74,6 @@ class _SignInScreenState extends State<SignInScreen> {
     return Center(
       child: Column(
         children: [
-          TextButton(
-            onPressed: () {
-              _onTapforgetpage();
-            },
-            child: Text('Forgot password?'),
-          ),
           RichText(
             text: TextSpan(
               style: TextStyle(
@@ -91,7 +90,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     text: "Sign Up",
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        _onTapSingUpButton();
+                        _onTapSingInButton();
                       }),
               ],
             ),
@@ -101,27 +100,18 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  void _onTapforgetpage() {
-    Navigator.push(
+  void _onTapSingInButton() {
+    Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
-        builder: (context) => EmailVarificationScreen(),
-      ),
-    );
-  }
-
-  void _onTapSingUpButton() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => SignUpScreen(),
-      ),
+        builder: (context) => const SignInScreen(),
+      ), (Route<dynamic> route) => false,
     );
   }
 
   @override
   void dispose() {
-    _emailTeController.dispose();
+    _confirmpasswordTeController.dispose();
     _passwordTeController.dispose();
     super.dispose();
   }
