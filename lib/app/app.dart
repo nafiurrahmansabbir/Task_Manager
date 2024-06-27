@@ -17,9 +17,7 @@ class TaskManagerApp extends StatelessWidget {
   ThemeData lightThemeData() {
     return ThemeData(
       inputDecorationTheme: InputDecorationTheme(
-        hintStyle: TextStyle(
-          color: Colors.grey.shade400
-        ),
+        hintStyle: TextStyle(color: Colors.grey.shade400),
         fillColor: Colors.white,
         filled: true,
         border: OutlineInputBorder(
@@ -31,7 +29,14 @@ class TaskManagerApp extends StatelessWidget {
           fontSize: 26,
           fontWeight: FontWeight.bold,
           color: Colors.black,
-        )
+          letterSpacing: 0.4,
+        ),
+        titleSmall: TextStyle(
+          fontSize: 14,
+          color: Colors.grey,
+          letterSpacing: 0.4,
+          fontWeight: FontWeight.w500,
+        ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -41,10 +46,17 @@ class TaskManagerApp extends StatelessWidget {
           fixedSize: Size.fromWidth(double.maxFinite),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
-          )
-
-        )
-      )
+          ),
+        ),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: Colors.grey.shade500,
+          textStyle: TextStyle(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
     );
   }
 }
