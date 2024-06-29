@@ -48,7 +48,7 @@ class _EmailVarificationScreenState extends State<EmailVarificationScreen> {
                   const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {_onTapPinCode();},
-                child: Icon(Icons.login),
+                child: Icon(Icons.arrow_forward_ios),
               ),
                   const SizedBox(
                     height: 26,

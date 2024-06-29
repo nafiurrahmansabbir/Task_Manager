@@ -56,7 +56,7 @@ class _PinVarificationScreenState extends State<PinVarificationScreen> {
                   const SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: () {_onTapSetPassword();},
-                    child: Icon(Icons.login),
+                    child: Text('Verify'),
                   ),
                   const SizedBox(
                     height: 26,
