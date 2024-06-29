@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:task_manager/ui/screens/auth/sign_in_screen.dart';
 import 'package:task_manager/ui/utilitys/app_colors.dart';
 import 'package:task_manager/ui/widgets/background_widget.dart';
 
@@ -73,7 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   const SizedBox(height: 10),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: _onTapBackToSignupPageFressly,
                     child: Icon(Icons.login),
                   ),
                   const SizedBox(
@@ -121,6 +122,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void _onTapBackToSignupPage() {
     Navigator.pop(context);
+  }
+
+  void _onTapBackToSignupPageFressly() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SignInScreen(),
+      ), (Route<dynamic> route) => false,
+    );
   }
 
   @override

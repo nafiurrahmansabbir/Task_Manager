@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../screens/auth/sign_in_screen.dart';
 import '../utilitys/app_colors.dart';
 import 'network_cached_image.dart';
 
-AppBar profile_appBar() {
+AppBar profile_appBar(context) {
   return AppBar(
     backgroundColor: AppColors.themeColor,
     leading: Padding(
@@ -30,7 +31,15 @@ AppBar profile_appBar() {
     ),
     actions: [
       IconButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const SignInScreen(),
+            ),
+            (Route<dynamic> route) => false,
+          );
+        },
         icon: Icon(
           Icons.logout_sharp,
           color: Colors.white70,
