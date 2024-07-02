@@ -1,19 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager/ui/screens/update_profile_screen.dart';
 
 import '../screens/auth/sign_in_screen.dart';
 import '../utilitys/app_colors.dart';
 import 'network_cached_image.dart';
 
-AppBar profile_appBar(context) {
+AppBar profile_appBar(context,[bool fromUpdateProfile=false]) {
   return AppBar(
     backgroundColor: AppColors.themeColor,
-    leading: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: CircleAvatar(
-        radius: 10,
-        // child: NetworkCachedImage(
-        //   url: '',
-        // ),
+    leading: GestureDetector(
+      onTap: () {
+        if(fromUpdateProfile){
+          return;
+        }
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UpdateProfileScreen(),
+          ),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: CircleAvatar(
+          radius: 10,
+          // child: NetworkCachedImage(
+          //   url: '',
+          // ),
+        ),
       ),
     ),
     title: Column(
@@ -31,7 +45,11 @@ AppBar profile_appBar(context) {
     ),
     actions: [
       IconButton(
+
         onPressed: () {
+          // if(fromUpdateProfile){
+          //   return;
+          // }
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(

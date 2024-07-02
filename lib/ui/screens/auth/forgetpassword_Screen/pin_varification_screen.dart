@@ -27,15 +27,6 @@ class _PinVarificationScreenState extends State<PinVarificationScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 130),
-                  Text(
-                    'Pin Varification',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  Text(
-                    'A 6 digits verification code will send to your e-mail adress',
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
                   const SizedBox(height: 20),
                   PinCodeTextField(
                     length: 6,
