@@ -3,8 +3,9 @@ import 'package:task_manager/ui/screens/calcelled_screen.dart';
 import 'package:task_manager/ui/screens/completed_screen.dart';
 import 'package:task_manager/ui/screens/in_progress_task_screen.dart';
 import 'package:task_manager/ui/screens/new_task_screen.dart';
-import 'package:task_manager/ui/utilitys/app_colors.dart';
 
+
+import '../utilities/app_colors.dart';
 import '../widgets/profile_appBar.dart';
 
 class MainBottomNavScreen extends StatefulWidget {

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
-import '../utilitys/asset_paths.dart';
+import '../utilities/asset_paths.dart';
+
 
 class BackgroundWidget extends StatelessWidget {
   const BackgroundWidget({super.key, required this.child});

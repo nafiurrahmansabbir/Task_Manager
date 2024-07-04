@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:task_manager/ui/screens/update_profile_screen.dart';
 
 import '../screens/auth/sign_in_screen.dart';
-import '../utilitys/app_colors.dart';
+import '../utilities/app_colors.dart';
 import 'network_cached_image.dart';
 
 AppBar profile_appBar(context,[bool fromUpdateProfile=false]) {

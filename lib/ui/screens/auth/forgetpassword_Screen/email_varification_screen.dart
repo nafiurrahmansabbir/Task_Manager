@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:task_manager/ui/screens/auth/forgetpassword_Screen/pin_varification_screen.dart';
 import 'package:task_manager/ui/screens/auth/sign_in_screen.dart';
-import 'package:task_manager/ui/utilitys/app_colors.dart';
+import 'package:task_manager/ui/utilities/app_colors.dart';
 import 'package:task_manager/ui/widgets/background_widget.dart';
 
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager/ui/screens/add_new_task_screen.dart';
-import 'package:task_manager/ui/utilitys/app_colors.dart';
-
+import '../utilities/app_colors.dart';
 import '../widgets/task_item.dart';
 import '../widgets/task_summary_card.dart';
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:task_manager/ui/screens/auth/forgetpassword_Screen/set_password.dart';
 import 'package:task_manager/ui/screens/auth/sign_in_screen.dart';
-import 'package:task_manager/ui/utilitys/app_colors.dart';
+import 'package:task_manager/ui/utilities/app_colors.dart';
 import 'package:task_manager/ui/widgets/background_widget.dart';
 
 class PinVarificationScreen extends StatefulWidget {
@@ -16,8 +16,11 @@ class PinVarificationScreen extends StatefulWidget {
 class _PinVarificationScreenState extends State<PinVarificationScreen> {
   final TextEditingController _pinTeController = TextEditingController();
 
+
   @override
   Widget build(BuildContext context) {
+    double heightOfScreen=MediaQuery.of(context).size.height;
+    double fontSizedBox= 0.27*heightOfScreen;
     return Scaffold(
       body: BackgroundWidget(
         child: SafeArea(
@@ -27,7 +30,7 @@ class _PinVarificationScreenState extends State<PinVarificationScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 20),
+                   SizedBox(height: fontSizedBox),
                   PinCodeTextField(
                     length: 6,
                     animationType: AnimationType.fade,
