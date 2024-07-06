@@ -97,9 +97,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         if (value?.trim().isEmpty ?? true) {
                           return 'Enter your mobile';
                         }
-                        // if (AppConstants.mobileRegExp.hasMatch(value!) == false) {
-                        //   return 'Enter a valid phone number';
-                        // }
                         return null;
                       },
                     ),

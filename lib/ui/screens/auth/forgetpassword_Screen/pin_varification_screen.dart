@@ -20,7 +20,7 @@ class _PinVarificationScreenState extends State<PinVarificationScreen> {
   @override
   Widget build(BuildContext context) {
     double heightOfScreen=MediaQuery.of(context).size.height;
-    double fontSizedBox= 0.27*heightOfScreen;
+    double fontSizedBox= 0.15*heightOfScreen;
     return Scaffold(
       body: BackgroundWidget(
         child: SafeArea(
@@ -31,6 +31,15 @@ class _PinVarificationScreenState extends State<PinVarificationScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                    SizedBox(height: fontSizedBox),
+                  Text(
+                    'Pin Varification',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  Text(
+                    'A 6 digits verification code will send to your e-mail adress',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                  SizedBox(height: 16,),
                   PinCodeTextField(
                     length: 6,
                     animationType: AnimationType.fade,
@@ -118,4 +127,11 @@ class _PinVarificationScreenState extends State<PinVarificationScreen> {
     _pinTeController.dispose();
     super.dispose();
   }
+
+
+
+
+
+
+
 }

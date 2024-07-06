@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager/ui/controllers/auth_controller.dart';
 import 'package:task_manager/ui/screens/update_profile_screen.dart';
 
 import '../screens/auth/sign_in_screen.dart';
@@ -34,11 +35,11 @@ AppBar profile_appBar(context,[bool fromUpdateProfile=false]) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Nafiur Rahman Sabbir',
+          AuthController.userData?.fullName??'',
           style: TextStyle(fontSize: 14, color: Colors.white),
         ),
         Text(
-          'nafiurrahmansabbir@gmail.com',
+          AuthController.userData?.email??'',
           style: TextStyle(fontSize: 10, color: Colors.white),
         ),
       ],
