@@ -9,6 +9,8 @@ import 'package:task_manager/ui/utilities/app_constants.dart';
 import 'package:task_manager/ui/widgets/background_widget.dart';
 import 'package:task_manager/ui/widgets/snack_bar_message.dart';
 
+import '../../widgets/custom_tost_massage.dart';
+
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -197,14 +199,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (response.isSuccess) {
       _clearTextFields();
       if (mounted) {
-        showSnackBarMessage(context, 'Registration success');
+        SuccesTost('Registation Success');
       }
     } else {
       if (mounted) {
-        showSnackBarMessage(
-          context,
-          response.errorMassege ?? 'Registration failed! Try again.',
-        );
+        ErrorTost('Registation Failed');
       }
     }
   }

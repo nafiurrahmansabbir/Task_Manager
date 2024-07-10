@@ -18,7 +18,7 @@ class _CompletedScreenState extends State<CompletedScreen> {
         child: ListView.builder(
           itemCount: 5,
           itemBuilder: (context, index) {
-            return TaskItem();
+            return null;
           },
         ),
       ),

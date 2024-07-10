@@ -5,8 +5,8 @@ import 'package:task_manager/ui/screens/in_progress_task_screen.dart';
 import 'package:task_manager/ui/screens/new_task_screen.dart';
 
 
-import '../utilities/app_colors.dart';
-import '../widgets/profile_appBar.dart';
+import '../../utilities/app_colors.dart';
+import '../../widgets/profile_appBar.dart';
 
 class MainBottomNavScreen extends StatefulWidget {
   const MainBottomNavScreen({super.key});

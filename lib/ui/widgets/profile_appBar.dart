@@ -4,6 +4,7 @@ import 'package:task_manager/ui/screens/update_profile_screen.dart';
 
 import '../screens/auth/sign_in_screen.dart';
 import '../utilities/app_colors.dart';
+import 'logout_alert_dialog.dart';
 import 'network_cached_image.dart';
 
 AppBar profile_appBar(context,[bool fromUpdateProfile=false]) {
@@ -48,16 +49,7 @@ AppBar profile_appBar(context,[bool fromUpdateProfile=false]) {
       IconButton(
 
         onPressed: () {
-          // if(fromUpdateProfile){
-          //   return;
-          // }
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const SignInScreen(),
-            ),
-            (Route<dynamic> route) => false,
-          );
+          logout_alert_dialog(context);
         },
         icon: Icon(
           Icons.logout_sharp,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:task_manager/ui/controllers/auth_controller.dart';
-import 'package:task_manager/ui/screens/main_bottom_nav_screen.dart';
+import 'package:task_manager/ui/screens/main_bottom_nav_screen/main_bottom_nav_screen.dart';
 import 'package:task_manager/ui/utilities/asset_paths.dart';
 import 'package:task_manager/ui/widgets/background_widget.dart';
 import 'sign_in_screen.dart';
