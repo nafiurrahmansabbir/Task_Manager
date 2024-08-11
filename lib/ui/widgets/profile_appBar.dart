@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:task_manager/ui/controllers/auth_controller.dart';
 import 'package:task_manager/ui/screens/update_profile_screen.dart';
@@ -7,12 +10,12 @@ import '../utilities/app_colors.dart';
 import 'logout_alert_dialog.dart';
 import 'network_cached_image.dart';
 
-AppBar profile_appBar(context,[bool fromUpdateProfile=false]) {
+AppBar profile_appBar(context, [bool fromUpdateProfile = false]) {
   return AppBar(
     backgroundColor: AppColors.themeColor,
     leading: GestureDetector(
       onTap: () {
-        if(fromUpdateProfile){
+        if (fromUpdateProfile) {
           return;
         }
         Navigator.push(
@@ -25,10 +28,10 @@ AppBar profile_appBar(context,[bool fromUpdateProfile=false]) {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: CircleAvatar(
-          radius: 10,
-          // child: NetworkCachedImage(
-          //   url: '',
-          // ),
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Image.memory(
+                  base64Decode(AuthController.userData?.photo ?? ''))),
         ),
       ),
     ),
@@ -36,18 +39,17 @@ AppBar profile_appBar(context,[bool fromUpdateProfile=false]) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          AuthController.userData?.fullName??'',
+          AuthController.userData?.fullName ?? '',
           style: TextStyle(fontSize: 14, color: Colors.white),
         ),
         Text(
-          AuthController.userData?.email??'',
+          AuthController.userData?.email ?? '',
           style: TextStyle(fontSize: 10, color: Colors.white),
         ),
       ],
     ),
     actions: [
       IconButton(
-
         onPressed: () {
           logout_alert_dialog(context);
         },
