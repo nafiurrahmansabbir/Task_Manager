@@ -3,9 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:task_manager/ui/screens/auth/sign_in_screen.dart';
 import 'package:task_manager/ui/utilities/app_colors.dart';
 import 'package:task_manager/ui/widgets/background_widget.dart';
+import 'package:task_manager/ui/widgets/centered_progressIndicator.dart';
+
+import '../../../../data/model/network_response.dart';
+import '../../../../data/network_caller/network_caller.dart';
+import '../../../../data/utilities/urls.dart';
+import '../../../widgets/custom_tost_massage.dart';
 
 class SetPassword extends StatefulWidget {
-  const SetPassword({super.key});
+  const SetPassword({super.key, required this.email, required this.otp});
+  final String email;
+  final String otp;
 
   @override
   State<SetPassword> createState() => _SetPasswordState();
@@ -14,6 +22,7 @@ class SetPassword extends StatefulWidget {
 class _SetPasswordState extends State<SetPassword> {
   final TextEditingController _confirmpasswordTeController = TextEditingController();
   final TextEditingController _passwordTeController = TextEditingController();
+  bool _setPasswordInProgress=false;
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +60,15 @@ class _SetPasswordState extends State<SetPassword> {
                     ),
                   ),
                   const SizedBox(height: 18),
-                  ElevatedButton(
-                    onPressed: () {_onTapSingInButton();},
-                    child: Text('Confirm'),
+                  Visibility(
+                    visible: _setPasswordInProgress==false,
+                    replacement: CenteredProgressIndicator(),
+                    child: ElevatedButton(
+                      onPressed: (){
+                        _resetPassword(_passwordTeController.text);
+                      },
+                      child: Text('Confirm'),
+                    ),
                   ),
                   const SizedBox(
                     height: 36,
@@ -96,6 +111,30 @@ class _SetPasswordState extends State<SetPassword> {
         ],
       ),
     );
+  }
+  Future<void> _resetPassword(String password) async {
+    _setPasswordInProgress = true;
+    setState(() {});
+
+    Map<String,dynamic> inputParameter={
+      "email":widget.email,
+      "OTP":widget.otp,
+      "password":password,
+    };
+    NetworkResponse response =
+    await NetworkCaller.postRequest(Urls.resetPassword,body: inputParameter);
+    _setPasswordInProgress = false;
+    if (mounted) {
+      setState(() {});
+    }
+    if (response.isSuccess) {
+      if (mounted) {
+        _onTapSingInButton();
+        SuccesTost('Password chang successfully ');
+      }
+    } else {
+      ErrorTost("Error Server");
+    }
   }
 
   void _onTapSingInButton() {

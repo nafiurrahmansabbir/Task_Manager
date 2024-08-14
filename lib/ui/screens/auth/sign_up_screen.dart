@@ -200,6 +200,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       _clearTextFields();
       if (mounted) {
         SuccesTost('Registation Success');
+        if(mounted){
+          _onTapSignInButton();
+        }
       }
     } else {
       if (mounted) {

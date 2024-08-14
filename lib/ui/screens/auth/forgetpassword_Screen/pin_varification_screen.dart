@@ -5,9 +5,16 @@ import 'package:task_manager/ui/screens/auth/forgetpassword_Screen/set_password.
 import 'package:task_manager/ui/screens/auth/sign_in_screen.dart';
 import 'package:task_manager/ui/utilities/app_colors.dart';
 import 'package:task_manager/ui/widgets/background_widget.dart';
+import 'package:task_manager/ui/widgets/centered_progressIndicator.dart';
+
+import '../../../../data/model/network_response.dart';
+import '../../../../data/network_caller/network_caller.dart';
+import '../../../../data/utilities/urls.dart';
+import '../../../widgets/custom_tost_massage.dart';
 
 class PinVarificationScreen extends StatefulWidget {
-  const PinVarificationScreen({super.key});
+  const PinVarificationScreen({super.key, required this.email});
+  final String email;
 
   @override
   State<PinVarificationScreen> createState() => _PinVarificationScreenState();
@@ -15,6 +22,8 @@ class PinVarificationScreen extends StatefulWidget {
 
 class _PinVarificationScreenState extends State<PinVarificationScreen> {
   final TextEditingController _pinTeController = TextEditingController();
+  bool _pinVarificationInProgress=false;
+
 
 
   @override
@@ -22,6 +31,7 @@ class _PinVarificationScreenState extends State<PinVarificationScreen> {
     double heightOfScreen=MediaQuery.of(context).size.height;
     double fontSizedBox= 0.15*heightOfScreen;
     return Scaffold(
+
       body: BackgroundWidget(
         child: SafeArea(
           child: SingleChildScrollView(
@@ -57,9 +67,15 @@ class _PinVarificationScreenState extends State<PinVarificationScreen> {
                      appContext: context,
                   ),
                   const SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () {_onTapSetPassword();},
-                    child: Text('Verify'),
+                  Visibility(
+                    visible: _pinVarificationInProgress==false,
+                    replacement: CenteredProgressIndicator(),
+                    child: ElevatedButton(
+                      onPressed:(){
+                        _verifyPin(_pinTeController.text);
+                      },
+                      child: Text('Verify'),
+                    ),
                   ),
                   const SizedBox(
                     height: 26,
@@ -104,6 +120,26 @@ class _PinVarificationScreenState extends State<PinVarificationScreen> {
     );
   }
 
+
+  Future<void> _verifyPin(otp) async {
+    _pinVarificationInProgress=true;
+    setState(() {});
+    NetworkResponse response =
+    await NetworkCaller.getRequest(Urls.verifyOtp(widget.email, otp));
+    _pinVarificationInProgress = false;
+    if (mounted) {
+      setState(() {});
+    }
+    if (response.isSuccess) {
+      if (mounted) {
+        _onTapSetPassword(otp);
+        SuccesTost('Set Password');
+      }
+    } else if(response.isSuccess) {
+      ErrorTost("Wrong Pin");
+    }
+  }
+
   void _onTapBackToSignupPage() {
     Navigator.pushAndRemoveUntil(
       context,
@@ -113,11 +149,11 @@ class _PinVarificationScreenState extends State<PinVarificationScreen> {
     );
   }
 
-  void _onTapSetPassword(){
+  void _onTapSetPassword(String otp){
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => SetPassword(),
+        builder: (context) => SetPassword(email: widget.email,otp: otp,),
       ),
     );
   }

@@ -1,10 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:task_manager/data/model/network_response.dart';
+import 'package:task_manager/data/network_caller/network_caller.dart';
+import 'package:task_manager/data/utilities/urls.dart';
 import 'package:task_manager/ui/screens/auth/forgetpassword_Screen/pin_varification_screen.dart';
 import 'package:task_manager/ui/screens/auth/sign_in_screen.dart';
 import 'package:task_manager/ui/utilities/app_colors.dart';
 import 'package:task_manager/ui/widgets/background_widget.dart';
-
+import 'package:task_manager/ui/widgets/centered_progressIndicator.dart';
+import 'package:task_manager/ui/widgets/custom_tost_massage.dart';
 
 class EmailVarificationScreen extends StatefulWidget {
   const EmailVarificationScreen({super.key});
@@ -16,6 +20,7 @@ class EmailVarificationScreen extends StatefulWidget {
 
 class _EmailVarificationScreenState extends State<EmailVarificationScreen> {
   final TextEditingController _emailTeController = TextEditingController();
+  bool _emailVarificationInProgress = false;
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +51,16 @@ class _EmailVarificationScreenState extends State<EmailVarificationScreen> {
                     ),
                   ),
                   const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () {_onTapPinCode();},
-                child: Icon(Icons.arrow_forward_ios),
-              ),
+                  Visibility(
+                    visible: _emailVarificationInProgress==false,
+                    replacement: CenteredProgressIndicator(),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _verifyEmail(_emailTeController.text);
+                      },
+                      child: Icon(Icons.arrow_forward_ios),
+                    ),
+                  ),
                   const SizedBox(
                     height: 26,
                   ),
@@ -93,20 +104,40 @@ class _EmailVarificationScreenState extends State<EmailVarificationScreen> {
     );
   }
 
+  Future<void> _verifyEmail(String email) async {
+    _emailVarificationInProgress = true;
+    setState(() {});
+    NetworkResponse response =
+        await NetworkCaller.getRequest(Urls.verifyEmail(email));
+    _emailVarificationInProgress = false;
+    if (mounted) {
+      setState(() {});
+    }
+    if (response.isSuccess) {
+      if (mounted) {
+        _onTapPinCode(email);
+        SuccesTost('Sending OTP ');
+      }
+    } else {
+      ErrorTost("Error Server");
+    }
+  }
+
   void _onTapBackToSignupPage() {
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
         builder: (context) => const SignInScreen(),
-      ), (Route<dynamic> route) => false,
+      ),
+      (Route<dynamic> route) => false,
     );
   }
 
-  void _onTapPinCode() {
+  void _onTapPinCode(email) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PinVarificationScreen(),
+        builder: (context) => PinVarificationScreen(email: email,),
       ),
     );
   }
