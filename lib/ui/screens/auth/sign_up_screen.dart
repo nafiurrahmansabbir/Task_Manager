@@ -1,14 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:task_manager/data/model/network_response.dart';
 import 'package:task_manager/data/network_caller/network_caller.dart';
 import 'package:task_manager/data/utilities/urls.dart';
-import 'package:task_manager/ui/screens/auth/sign_in_screen.dart';
 import 'package:task_manager/ui/utilities/app_colors.dart';
 import 'package:task_manager/ui/utilities/app_constants.dart';
 import 'package:task_manager/ui/widgets/background_widget.dart';
-import 'package:task_manager/ui/widgets/snack_bar_message.dart';
-
 import '../../widgets/custom_tost_massage.dart';
 
 
@@ -220,7 +218,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void _onTapSignInButton() {
-    Navigator.pop(context);
+    Get.back();
   }
 
   @override

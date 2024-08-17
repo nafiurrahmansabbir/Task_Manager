@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:task_manager/data/network_caller/network_caller.dart';
 import 'package:task_manager/data/utilities/urls.dart';
-import 'package:task_manager/ui/screens/main_bottom_nav_screen/main_bottom_nav_screen.dart';
 import 'package:task_manager/ui/widgets/background_widget.dart';
 import 'package:task_manager/ui/widgets/custom_tost_massage.dart';
 import '../../data/model/network_response.dart';
@@ -129,9 +130,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   }
 
   void _refreshHomeScreen() {
-    Navigator.pushAndRemoveUntil(
-      context, MaterialPageRoute(builder: (context) => MainBottomNavScreen()),
-          (Route<dynamic> route) => false,);
+    Get.back();
   }
 
   @override

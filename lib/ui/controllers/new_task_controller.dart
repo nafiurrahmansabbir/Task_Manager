@@ -16,7 +16,7 @@ class NewTaskController extends GetxController{
 
 
   Future<bool> getNewTask() async {
-    bool isSucces=false;
+    bool isSuccess=false;
     _getNewTaskInProgress = true;
     update();
       NetworkResponse response = await NetworkCaller.getRequest(Urls.newTasks);
@@ -30,6 +30,6 @@ class NewTaskController extends GetxController{
       _getNewTaskInProgress=false;
       update();
 
-      return isSucces;
+      return isSuccess;
     }
 }
