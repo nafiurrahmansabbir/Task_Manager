@@ -1,18 +1,18 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:task_manager/ui/controllers/sign_in_controller.dart';
 import 'package:task_manager/ui/screens/auth/forgetpassword_Screen/email_varification_screen.dart';
 import 'package:task_manager/ui/screens/auth/sign_up_screen.dart';
 import 'package:task_manager/ui/screens/main_bottom_nav_screen/main_bottom_nav_screen.dart';
+
 import 'package:task_manager/ui/utilities/app_colors.dart';
 import 'package:task_manager/ui/widgets/background_widget.dart';
-import '../../../data/model/login_model.dart';
-import '../../../data/model/network_response.dart';
-import '../../../data/network_caller/network_caller.dart';
-import '../../../data/utilities/urls.dart';
-import '../../controllers/auth_controller.dart';
+
 import '../../utilities/app_constants.dart';
 import '../../widgets/custom_tost_massage.dart';
-import '../../widgets/snack_bar_message.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -25,8 +25,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _emailTEController = TextEditingController();
   final TextEditingController _passwordTEController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool _signInApiInProgress = false;
-  bool _showPassword=false;
+  bool _showPassword = false;
 
   @override
   Widget build(BuildContext context) {
@@ -90,16 +89,18 @@ class _SignInScreenState extends State<SignInScreen> {
                       },
                     ),
                     const SizedBox(height: 16),
-                    Visibility(
-                      visible: _signInApiInProgress == false,
-                      replacement: const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                      child: ElevatedButton(
-                        onPressed: _onTapNextButton,
-                        child: const Icon(Icons.arrow_circle_right_outlined),
-                      ),
-                    ),
+                    GetBuilder<SignInController>(builder: (signInController) {
+                      return Visibility(
+                        visible: signInController.singInApiInProgress == false,
+                        replacement: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                        child: ElevatedButton(
+                          onPressed: _onTapNextButton,
+                          child: const Icon(Icons.arrow_circle_right_outlined),
+                        ),
+                      );
+                    }),
                     const SizedBox(height: 36),
                     Center(
                       child: Column(
@@ -140,51 +141,17 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  void _onTapNextButton() {
+  Future<void> _onTapNextButton() async {
     if (_formKey.currentState!.validate()) {
-      _signUp();
+     final bool result= await Get.find<SignInController>().signIn(
+          _emailTEController.text.trim(), _passwordTEController.text.trim());
+     if(result){
+       Get.offAll(()=>MainBottomNavScreen());
+     }else{
+       ErrorTost('Email/password is not correct. Try again');
+     }
     }
-  }
 
-  Future<void> _signUp() async {
-    _signInApiInProgress = true;
-    if (mounted) {
-      setState(() {});
-    }
-
-    Map<String, dynamic> requestData = {
-      'email': _emailTEController.text.trim(),
-      'password': _passwordTEController.text,
-    };
-
-    final NetworkResponse response =
-        await NetworkCaller.postRequest(Urls.login, body: requestData);
-    _signInApiInProgress = false;
-    if (mounted) {
-      setState(() {});
-    }
-    if (response.isSuccess) {
-      LoginModel loginModel = LoginModel.fromJson(response.responseData);
-      await AuthController.saveUserAccessToken(loginModel.token!);
-      await AuthController.saveUserData(loginModel.userModel!);
-
-      if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const MainBottomNavScreen(),
-          ),
-        );
-        SuccesTost('Loged In');
-      }
-    } else {
-      if (mounted) {
-        showSnackBarMessage(
-          context,
-          response.errorMassege ?? 'Email/password is not correct. Try again',
-        );
-      }
-    }
   }
 
   void _onTapSignUpButton() {

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:task_manager/data/model/Task_Count/task_by_status_count_wrapper_model.dart';
 import 'package:task_manager/data/model/network_response.dart';
 import 'package:task_manager/data/model/task_list_wrapper_model.dart';
 import 'package:task_manager/data/network_caller/network_caller.dart';
 import 'package:task_manager/data/utilities/urls.dart';
+import 'package:task_manager/ui/controllers/new_task_controller.dart';
 import 'package:task_manager/ui/screens/add_new_task_screen.dart';
 import 'package:task_manager/ui/widgets/centered_progressIndicator.dart';
 import 'package:task_manager/ui/widgets/custom_tost_massage.dart';
@@ -21,7 +24,6 @@ class NewTaskScreen extends StatefulWidget {
 }
 
 class _NewTaskScreenState extends State<NewTaskScreen> {
-  bool _getNewTaskInProgress = true;
   bool _getNewTaskCountByStatusInProgress = true;
   List<TaskModel> newTaskList = [];
   List<TaskCountByStatusModel> taskCountStatusList = [];
@@ -30,10 +32,12 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _getNewTaskCountByStatus();
-    _getNewTask();
+    _initialCall();
   }
-
+  void _initialCall(){
+    _getNewTaskCountByStatus();
+    Get.find<NewTaskController>().getNewTask();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,24 +53,26 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
             Expanded(
               child: RefreshIndicator(
                 onRefresh: () async {
-                  _getNewTask();
-                  _getNewTaskCountByStatus();
+                  _initialCall();
                 },
-                child: Visibility(
-                  visible: _getNewTaskInProgress == false,
-                  replacement: const CenteredProgressIndicator(),
-                  child: ListView.builder(
-                    itemCount: newTaskList.length,
-                    itemBuilder: (context, index) {
-                      return TaskItem(
-                        taskModel: newTaskList[index],
-                        onUpdateTask: () {
-                          _getNewTaskCountByStatus();
-                          _getNewTask();
+                child: GetBuilder<NewTaskController>(
+                  builder: (newTaskController) {
+                    return Visibility(
+                      visible: newTaskController.getNewTaskInProgress == false,
+                      replacement: const CenteredProgressIndicator(),
+                      child: ListView.builder(
+                        itemCount: newTaskController.newtaskList.length,
+                        itemBuilder: (context, index) {
+                          return TaskItem(
+                            taskModel: newTaskController.newtaskList[index],
+                            onUpdateTask: () {
+                              _initialCall();
+                            },
+                          );
                         },
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  }
                 ),
               ),
             ),
@@ -141,24 +147,5 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
     }
   }
 
-  Future<void> _getNewTask() async {
-    _getNewTaskInProgress = true;
-    if (mounted) {
-      setState(() {});
-      NetworkResponse response = await NetworkCaller.getRequest(Urls.newTasks);
-      if (response.isSuccess) {
-        TaskListWrapperModel taskListWrapperModel =
-            TaskListWrapperModel.fromJson(response.responseData);
-        newTaskList = taskListWrapperModel.tasklist ?? [];
-      } else {
-        if (mounted) {
-          ErrorTost('Get New Task Failed!');
-        }
-      }
-    }
-    _getNewTaskInProgress = false;
-    if (mounted) {
-      setState(() {});
-    }
-  }
+
 }

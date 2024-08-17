@@ -25,6 +25,7 @@ dependencies:
   fluttertoast: ^8.2.6
   rflutter_alert: ^2.0.7
   image_picker: ^1.1.2
+  get: ^4.6.6
 
   # end dependency
 
