@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:task_manager/data/model/Task_Count/task_by_status_count_wrapper_model.dart';
 import 'package:task_manager/data/model/network_response.dart';
-import 'package:task_manager/data/model/task_list_wrapper_model.dart';
 import 'package:task_manager/data/network_caller/network_caller.dart';
 import 'package:task_manager/data/utilities/urls.dart';
 import 'package:task_manager/ui/controllers/new_task_controller.dart';
@@ -91,12 +90,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
   }
 
   void _onTapAddButton() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => AddNewTaskScreen(),
-      ),
-    );
+    Get.to(()=>AddNewTaskScreen());
   }
 
   Widget _buildSummaruSection() {

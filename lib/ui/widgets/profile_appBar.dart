@@ -1,14 +1,13 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:task_manager/ui/controllers/auth_controller.dart';
 import 'package:task_manager/ui/screens/update_profile_screen.dart';
-
-import '../screens/auth/sign_in_screen.dart';
 import '../utilities/app_colors.dart';
 import 'logout_alert_dialog.dart';
-import 'network_cached_image.dart';
+
 
 AppBar profile_appBar(context, [bool fromUpdateProfile = false]) {
   return AppBar(
@@ -18,12 +17,7 @@ AppBar profile_appBar(context, [bool fromUpdateProfile = false]) {
         if (fromUpdateProfile) {
           return;
         }
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => UpdateProfileScreen(),
-          ),
-        );
+        Get.to(()=>UpdateProfileScreen());
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),

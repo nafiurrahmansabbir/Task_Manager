@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import '../../data/model/login_model.dart';
 import '../../data/model/network_response.dart';
 import '../../data/network_caller/network_caller.dart';
@@ -32,7 +31,6 @@ class SignInController extends GetxController {
       SuccesTost('Loged In');
       isSucces=true;
     } else {
-      // ErrorTost('Email/password is not correct. Try again');
       isSucces=false;
     }
     _signInApiInProgress = false;
